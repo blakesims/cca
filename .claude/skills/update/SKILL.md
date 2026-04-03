@@ -1,6 +1,6 @@
 ---
 name: update
-description: Checks for new prompts from the instructor and runs them, then offers to customize the student's setup
+description: Use whenever the user wants to update - checks for new prompts from the instructor and runs them, then offers to customize the student's setup
 ---
 
 # Update
