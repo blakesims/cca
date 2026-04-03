@@ -29,6 +29,13 @@ echo $LANG        → UTF-8 support
 tput lines/cols   → terminal size
 ```
 
+## Skills
+
+Skills live in `.claude/skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`). Claude auto-loads them when the description matches the user's request, or they can be invoked directly with `/<name>`.
+
+Available skills in this project:
+- `/update` — check for new prompts from instructor, run them, then offer customization
+
 ## Key rules
 
 - This is for beginners. Explain things simply. Don't overwhelm.

@@ -116,7 +116,7 @@ If not, append this function, replacing `__CCA_DIR__` with the absolute path to 
 __CMD__() {
     local dir="__CCA_DIR__"
     case "${1:-}" in
-        update) cd "$dir" && git pull && claude "/update" ;;
+        update) cd "$dir" && git pull && claude "Run the update skill" ;;
         *)      "$dir/help.sh" "$@" ;;
     esac
 }
