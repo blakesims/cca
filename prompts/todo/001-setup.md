@@ -92,20 +92,28 @@ For each command: bold name, plain-English description, 1-3 examples prefixed wi
 chmod +x help.sh
 ```
 
-## Step 4: Add the `cca` shell function
+## Step 4: Ask what they want to call the command
+
+Ask the student: "What do you want to call your help command? The default is `cca`. You could also use `help`, `h`, or anything you like."
+
+- If they pick `help`, warn them: "Note: `help` is a built-in bash command. Your alias will override it, which is fine — you won't need the built-in. Just letting you know."
+- If they just press enter or say "default", use `cca`.
+- Store their choice in `.config` (a local gitignored file) as `COMMAND_NAME=<their choice>` so future updates know what they picked.
+
+## Step 5: Add the shell function
 
 Determine the correct rc file:
 - zsh → `~/.zshrc`
 - bash → `~/.bashrc` (also Git Bash)
 
-Check if the rc file already contains `cca()`. If it does, skip this step.
+Check if the rc file already contains a function for this tool (search for `# CCA — Claude Code Architects`). If it does, skip this step.
 
-If not, append this function (replacing `__CCA_DIR__` with the absolute path to this directory):
+If not, append this function, replacing `__CCA_DIR__` with the absolute path to this directory and `__CMD__` with their chosen command name:
 
 ```bash
 
 # CCA — Claude Code Architects
-cca() {
+__CMD__() {
     local dir="__CCA_DIR__"
     case "${1:-}" in
         update) cd "$dir" && git pull && claude "/update" ;;
@@ -116,20 +124,18 @@ cca() {
 
 Then source the rc file so it works immediately.
 
-Note: on bash, `cca` may shadow nothing, but `help` is a built-in. We use `cca` intentionally to avoid that conflict.
-
-## Step 5: Test
+## Step 6: Test
 
 Run `./help.sh` and `./help.sh folder` to verify colors render and search works.
 
-## Step 6: Tell the student
+## Step 7: Tell the student
 
-Show them a short summary of what was set up, and this table:
+Show them a short summary of what was set up. Use their chosen command name (from `.config`) in the table:
 
 | Command | What it does |
 |---|---|
-| `cca` | Show the full terminal cheat sheet (arrows to scroll, q to quit) |
-| `cca folder` | Search for folder-related commands |
-| `cca delete` | Search for delete commands |
-| `cca tips` | Show beginner tips |
-| `cca update` | Pull latest updates from your instructor |
+| `<cmd>` | Show the full terminal cheat sheet (arrows to scroll, q to quit) |
+| `<cmd> folder` | Search for folder-related commands |
+| `<cmd> delete` | Search for delete commands |
+| `<cmd> tips` | Show beginner tips |
+| `<cmd> update` | Pull latest updates + customize your setup |

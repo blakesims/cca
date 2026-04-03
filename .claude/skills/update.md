@@ -9,9 +9,14 @@ This skill is triggered by `cca update` which runs `git pull` then `claude "/upd
 2. List all files in `prompts/todo/`. For each one, check if its filename appears in `.completed`.
 
 3. If there are NO pending prompts:
-   - Tell the student: "You're up to date! No new updates."
-   - Show the current version from `version.txt`.
-   - Exit.
+   - Tell the student: "You're up to date!" and show the current version from `version.txt`.
+   - Then ask: "Want to customize anything? For example:"
+     - "Add or remove commands from your help sheet"
+     - "Change your command name (currently `cca`)"
+     - "Add a shell alias"
+     - "Or ask me anything about the terminal"
+   - If they want to customize help.sh, read it first, make the changes, and test.
+   - If they want to rename their command, update the shell function in their rc file (find the existing function, replace it, re-source).
 
 4. If there ARE pending prompts:
    - Tell the student how many updates are pending.

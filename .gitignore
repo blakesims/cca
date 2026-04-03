@@ -4,3 +4,4 @@ help.sh
 # Local state (not tracked)
 .completed
 .local-version
+.config
