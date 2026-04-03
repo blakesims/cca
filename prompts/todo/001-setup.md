@@ -116,19 +116,42 @@ If not, append this function, replacing `__CCA_DIR__` with the absolute path to 
 __CMD__() {
     local dir="__CCA_DIR__"
     case "${1:-}" in
-        update) cd "$dir" && git pull && claude "Run the update skill" ;;
-        *)      "$dir/help.sh" "$@" ;;
+        update)
+            if ! command -v claude >/dev/null 2>&1; then
+                echo "Error: 'claude' is not installed or not in your PATH."
+                echo "Install it from: https://docs.anthropic.com/en/docs/claude-code/overview"
+                return 1
+            fi
+            (
+                cd "$dir" || { echo "Error: Could not find $dir — was it moved?"; return 1; }
+                git pull --ff-only 2>/dev/null || {
+                    echo "Update failed — you may have local changes conflicting with the update."
+                    echo "If you're stuck, run: cd $dir && git stash && git pull && git stash pop"
+                    return 1
+                }
+                claude "Run the update skill"
+            )
+            ;;
+        *)  "$dir/help.sh" "$@" ;;
     esac
 }
 ```
 
 Then source the rc file so it works immediately.
 
-## Step 6: Test
+## Step 6: Set local version
+
+Copy `version.txt` to `.local-version` so the update skill knows which version the student started on:
+
+```
+cp version.txt .local-version
+```
+
+## Step 7: Test
 
 Run `./help.sh` and `./help.sh folder` to verify colors render and search works.
 
-## Step 7: Tell the student
+## Step 8: Tell the student
 
 Show them a short summary of what was set up. Use their chosen command name (from `.config`) in the table:
 
